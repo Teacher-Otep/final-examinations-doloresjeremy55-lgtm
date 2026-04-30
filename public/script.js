@@ -16,7 +16,7 @@ function showSection(sectionId) {
 function editStudent(id) {
     showSection('update');
 
-    fetch('get_student.php?id=' + id)
+    fetch('index.php?action=get_student&id=' + id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to load student data: ' + response.statusText);
@@ -49,15 +49,16 @@ function editStudent(id) {
 // Function to delete student
 function deleteStudent(id) {
     if (confirm("Delete this student?")) {
-        window.location.href = "delete.php?id=" + id;
+        window.location.href = "index.php?action=delete&id=" + id;
     }
 }
 
 // When page loads, show the appropriate section
 window.onload = function () {
-    // Always start with home section on page load
-    showSection('home');
-    
+    const params = new URLSearchParams(window.location.search);
+    const initialSection = params.get('section') || 'home';
+    showSection(initialSection);
+
     // Clean the URL to remove any query parameters
     window.history.replaceState({}, document.title, window.location.pathname);
 

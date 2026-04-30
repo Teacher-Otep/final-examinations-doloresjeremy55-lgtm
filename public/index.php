@@ -1,3 +1,25 @@
+<?php
+$actionsPath = __DIR__ . '/../includes';
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    if ($action === 'insert' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once $actionsPath . '/insert.php';
+        exit;
+    }
+    if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once $actionsPath . '/update.php';
+        exit;
+    }
+    if ($action === 'delete') {
+        require_once $actionsPath . '/delete.php';
+        exit;
+    }
+    if ($action === 'get_student') {
+        require_once $actionsPath . '/get_student.php';
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +45,7 @@ style="height:55px; width:55px; border-radius:50%; cursor:pointer;">
     <section id="create" class="content">
         <h1 class="contenttitle"> Insert New Student </h1>
 
-    <form action="insert.php" method="POST">
+    <form action="index.php?action=insert" method="POST">
         <label for="surname" class="label">Surname</label>
         <input type="text" name="surname" id="surname" class="field" required><br/>
 
@@ -103,7 +125,7 @@ style="height:55px; width:55px; border-radius:50%; cursor:pointer;">
 
     <section id="update" class="content" style="display:none;">
         <h1 class="contenttitle">Update Student</h1>
-    <form id="updateForm" action="update.php" method="POST">
+    <form id="updateForm" action="index.php?action=update" method="POST">
         <label for="update_id_input" class="label">Student ID</label>
         <input type="number" id="update_id_input" class="field" placeholder="Enter Student ID" required><br/>
         <button type="button" id="loadstudent" class="btns">Load Student</button><br/><br/>
@@ -133,7 +155,7 @@ style="height:55px; width:55px; border-radius:50%; cursor:pointer;">
 
     <section id="delete" class="content" style="display:none;">
         <h1 class="contenttitle">Delete Student</h1>
-    <form id="deleteForm" action="delete.php" method="POST">
+    <form id="deleteForm" action="index.php?action=delete" method="POST">
         <label for="delete_id" class="label">Student ID</label>
         <input type="number" name="id" id="delete_id" class="field" required><br/>
 
